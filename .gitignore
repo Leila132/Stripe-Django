@@ -1,0 +1,4 @@
+*.sqlite3
+.pytest_cache/
+*.db
+__pycache__/

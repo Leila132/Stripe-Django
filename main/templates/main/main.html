@@ -1,0 +1,44 @@
+{% load static %}
+<html>
+  <head>
+    {% if object.name %}
+    <title>Buy {{ object.name }}</title>
+    {% endif %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{% static 'js/stripe.js' %}"></script>
+    <style>
+      #payment-form {
+        display: none; /* Скрываем форму по умолчанию */
+      }
+    </style>
+  </head>
+  <body>
+    {% if object.name %}
+    <h1>{{ object.name }}</h1>
+    {% endif %}
+    {% if object.name %}
+    <p>{{ object.description }}</p>
+    {% endif %}
+    <p>{{ object.price }}</p> <p>{{ object.currency }}</p>
+    {% if object.items %}
+      {% for el in object.items.all %}
+          <p>{{el.name}}</p>
+      {% endfor %}
+    {% endif %}
+    <p>Я хочу оплатить в: </p>
+    <select id="curr" name="curr">
+      <option value="USD">USD</option>
+      <option value="RUB">RUB</option>
+    </select>
+    <button id="buy-button" data-object-id="{{ object.id }}" obj_type="{{ type_of_obj }}">Buy with Checkout</button>
+    <button id="show-card-payment">Pay with Card</button>
+    
+    <form id="payment-form">
+      <div id="card-element">
+        <!--Stripe Card Element-->
+      </div>
+      <button id="submit-payment">Submit Payment</button>
+      <div id="card-errors" role="alert"></div>
+    </form>
+  </body>
+</html>
